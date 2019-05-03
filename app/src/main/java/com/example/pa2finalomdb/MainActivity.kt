@@ -6,7 +6,9 @@ import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.view.MenuItem
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.frame_main.*
 import kotlinx.android.synthetic.main.toolbar.*
+import org.jetbrains.anko.design.snackbar
 
 class MainActivity : AppCompatActivity() {
 
@@ -32,6 +34,16 @@ class MainActivity : AppCompatActivity() {
 
         // Sincroniza o estado do ícone na Toolbar com o Menu Lateral
         abreFechaToogle.syncState()
+
+        searchButton.setOnClickListener {
+            // Testa se o usuário digitou alguma coisa para buscar
+            if (searchField.text.isNotEmpty()) {
+                substituiFragment()
+            } else {
+                // Senão, mostra uma mensagem na parte debaixo do LinearLayout
+                mainView.snackbar("É preciso digitar um título a ser buscado")
+            }
+        }
     }
 
     // Trata eventos de cliques nas opções do menu lateral
@@ -46,5 +58,15 @@ class MainActivity : AppCompatActivity() {
         // Fecha o menu lateral depois de tratar o evento
         menuLateralDrawerLayout.closeDrawer(GravityCompat.START)
         return retorno
+    }
+
+    private fun substituiFragment() {
+        // Variável que armazena o Fragment que vai preencher a tela princial
+        val fragment = DetalhesFilmeFragment()
+
+        // Transação de Fragment a partir do SupportFragmentManager
+        val fragmentTransaction = supportFragmentManager.beginTransaction()
+        fragmentTransaction.replace(R.id.fragmentDetalhe, fragment)
+        fragmentTransaction.commit()
     }
 }
