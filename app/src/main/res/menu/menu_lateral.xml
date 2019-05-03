@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Sair -->
+    <item android:id="@+id/sairMenuItem"
+          android:title="Sair"/>
+          <!--android:icon="@drawable/icone_sair"-->
+</menu>
