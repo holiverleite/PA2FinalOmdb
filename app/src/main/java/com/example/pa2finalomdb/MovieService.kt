@@ -45,4 +45,14 @@ class MovieService {
         .baseUrl(Constantes.URL_BASE)
         .client(okHttpClientBuilder.build())
         .build()
+
+    // Cria um objeto, a partir da Interface Retrofit, que contém as funções de requisição
+    val chamadaApi: ChamadasOmdbAPI = retrofit.create(ChamadasOmdbAPI::class.java)
+
+    fun buscarFilmeComOTitulo(titulo: String) {
+
+        chamadaApi.requestFilmByTitle("teste").enqueue(
+            // Implementar requisicao com callback
+        )
+    }
 }
