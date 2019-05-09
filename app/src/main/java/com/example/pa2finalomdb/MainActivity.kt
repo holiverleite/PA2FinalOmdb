@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
+import android.util.Log
 import android.view.MenuItem
 import android.widget.Toast
 import com.example.pa2finalomdb.model.Movie
@@ -42,8 +43,7 @@ class MainActivity : AppCompatActivity() {
         searchButton.setOnClickListener {
             // Testa se o usuário digitou alguma coisa para buscar
             if (searchField.text.isNotEmpty()) {
-                movieService.buscarFilmeComOTitulo("vini")
-//                substituiFragment()
+                movieService.buscarFilmeComOTitulo(searchField.text.toString())
             } else {
                 // Senão, mostra uma mensagem na parte debaixo do LinearLayout
                 mainView.snackbar("É preciso digitar um título a ser buscado")
@@ -51,13 +51,22 @@ class MainActivity : AppCompatActivity() {
         }
 
         movieService.responseOmdb = object : MovieService.ResponseOmdb {
-            override fun onResponse(item: Movie) {
+            override fun onResponse(movie: Movie) {
                 Toast.makeText(this@MainActivity, "sucesso", Toast.LENGTH_LONG).show()
-
+                if (movie != null) {
+                    Log.d("tag",movie.title)
+                    Log.d("tag",movie.year)
+                    Log.d("tag",movie.released)
+                    Log.d("tag",movie.genre)
+                    Log.d("tag",movie.director)
+                    Log.d("tag",movie.poster)
+                    Log.d("tag",movie.website)
+                }
+//                substituiFragment()
             }
 
             override fun onResponseFail(error: Throwable) {
-                Toast.makeText(this@MainActivity, "erro", Toast.LENGTH_LONG).show()
+                Toast.makeText(this@MainActivity, "Erro na consulta do filme", Toast.LENGTH_LONG).show()
             }
         }
     }

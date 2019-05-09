@@ -16,7 +16,7 @@ import java.lang.System.err
 class MovieService(mainActivity: MainActivity) {
 
     interface ResponseOmdb{
-        fun onResponse(item: Movie)
+        fun onResponse(movie: Movie)
         fun onResponseFail(error: Throwable)
     }
 
