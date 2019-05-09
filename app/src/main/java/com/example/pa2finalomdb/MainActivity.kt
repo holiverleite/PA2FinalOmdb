@@ -5,12 +5,16 @@ import android.os.Bundle
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.view.MenuItem
+import android.widget.Toast
+import com.example.pa2finalomdb.model.Movie
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.frame_main.*
 import kotlinx.android.synthetic.main.toolbar.*
 import org.jetbrains.anko.design.snackbar
 
 class MainActivity : AppCompatActivity() {
+
+    private val movieService = MovieService(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,10 +42,22 @@ class MainActivity : AppCompatActivity() {
         searchButton.setOnClickListener {
             // Testa se o usuário digitou alguma coisa para buscar
             if (searchField.text.isNotEmpty()) {
-                substituiFragment()
+                movieService.buscarFilmeComOTitulo("vini")
+//                substituiFragment()
             } else {
                 // Senão, mostra uma mensagem na parte debaixo do LinearLayout
                 mainView.snackbar("É preciso digitar um título a ser buscado")
+            }
+        }
+
+        movieService.responseOmdb = object : MovieService.ResponseOmdb {
+            override fun onResponse(item: Movie) {
+                Toast.makeText(this@MainActivity, "sucesso", Toast.LENGTH_LONG).show()
+
+            }
+
+            override fun onResponseFail(error: Throwable) {
+                Toast.makeText(this@MainActivity, "erro", Toast.LENGTH_LONG).show()
             }
         }
     }
