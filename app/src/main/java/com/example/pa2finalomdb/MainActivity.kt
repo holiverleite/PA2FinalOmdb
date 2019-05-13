@@ -53,16 +53,7 @@ class MainActivity : AppCompatActivity() {
         movieService.responseOmdb = object : MovieService.ResponseOmdb {
             override fun onResponse(movie: Movie) {
                 Toast.makeText(this@MainActivity, "sucesso", Toast.LENGTH_LONG).show()
-                if (movie != null) {
-                    Log.d("tag",movie.title)
-                    Log.d("tag",movie.year)
-                    Log.d("tag",movie.released)
-                    Log.d("tag",movie.genre)
-                    Log.d("tag",movie.director)
-                    Log.d("tag",movie.poster)
-                    Log.d("tag",movie.website)
-                }
-//                substituiFragment()
+                substituiFragment(movie)
             }
 
             override fun onResponseFail(error: Throwable) {
@@ -85,9 +76,11 @@ class MainActivity : AppCompatActivity() {
         return retorno
     }
 
-    private fun substituiFragment() {
+    private fun substituiFragment(movie: Movie) {
         // Variável que armazena o Fragment que vai preencher a tela princial
         val fragment = DetalhesFilmeFragment()
+        fragment.movie = movie
+
 
         // Transação de Fragment a partir do SupportFragmentManager
         val fragmentTransaction = supportFragmentManager.beginTransaction()
